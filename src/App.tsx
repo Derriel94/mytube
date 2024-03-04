@@ -9,7 +9,6 @@ import './App.css'
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
-
   const [randomvideoId, setRandomVideoId] = useState("dyFVwXROzZk&t=7463s")
   const [videoFeed, setFeedVideo] = useState("");
   const [videoList, setVideoList] = useState([]);
@@ -32,8 +31,6 @@ const App = () => {
 
   const handleSubmit = () => {
 
-
-  
         fetchFromApi(`search?part=snippet&q=${searchTerm}`)
     .then((data)=> {
       let randomVideo = data.items[Math.floor(Math.random() * 50)]
@@ -41,15 +38,19 @@ const App = () => {
       setFeedVideo(randomVideo.snippet.title)
       setVideoList(data.items)
      })   
-  
-  
-  
+
+  }
+
+  const handleEnter = (e) => {
+    if (e.key == "Enter") {
+      handleSubmit()
+    }
   }
   return (
     <BrowserRouter>
       <Box sx={{ backgroundColor: '#000'}}>
       <Paper 
-      component="form"
+      
       sx={{
         borderRadius: 20,
         border: '1px solid #e3e3e3',
@@ -62,6 +63,7 @@ const App = () => {
         placeholder="Search..."
         value={searchTerm}
         onChange={(e)=>{setSearchTerm(e.target.value)}}
+        onKeyDown={(e)=> handleEnter(e)}
         />
         <IconButton onClick={handleSubmit} sx={{p:"5px", color:"blue"}}>
           <IconBxSearchAlt />       
