@@ -1,30 +1,23 @@
 import React from 'react'
 import { Box,Stack,Typography } from "@mui/material"
+import {VideoCard} from "./componentindex"
 
 const Videos = ( {videoList} ) => {
 	
 	return (
-		<Stack
-			direction="row"
+		<Box direction="row"
 			flexWrap="wrap"
-			justifyContent="start"
-			gap={2} sx={{ height: {sx: "auto", md: "32vh"}}}>
-		<Box>
+			justifyContent="center"
+			alignItems="center"
+			gap={2} sx={{ height: "auto"}}>
 		{videoList.map((video, idx) => {
 
 			return (
 				<Box key={idx}>
-					<Typography 
-						variant="subttile2"
-						fontWeight="bold"
-						color="blue">
-						{video.snippet.title}
-					</Typography>
+					<VideoCard videoId={video.id} videoSnippet={video.snippet}/>
 				</Box>)
 		})}
 		</Box>
-		</Stack>
-
 	)
 }
 
