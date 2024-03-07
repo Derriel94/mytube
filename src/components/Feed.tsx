@@ -19,6 +19,8 @@ function Feed({randomvideoId, videoFeed, videoList}) {
 				<Box 
 					sx={{ height: "60vh", width: "100%"}}
 					display="flex"
+					position="sticky"
+					top="50px"
 					justifyContent="center"
 					flexDirection="column"
 					alignItems="center"
@@ -28,10 +30,10 @@ function Feed({randomvideoId, videoFeed, videoList}) {
 						className="react-player" 
 						controls
 						/>
-					<Typography color="#fff" variant="h4" fontWeight="bold" p={1}>
-						MyTube: <span style={{color: "blue"}}> {videoFeed || "Videos"}</span>
-					</Typography>
 				</Box>
+				<Typography color="#fff" variant="h4" fontWeight="bold" p={1}>
+						MyTube: <span style={{color: "blue"}}> {videoFeed || "Videos"}</span>
+				</Typography>
 					<Videos videoList={videoList}/>
 			</Stack>
 	)

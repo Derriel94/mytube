@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams} from 'react-router-dom';
 import { NavBar, Feed, VideoDetail, ChannelDetail, SearchFeed } from './components/componentindex'
 import { Box, Paper, IconButton } from '@mui/material';
 import { Search } from '@mui/icons-material/Search';
@@ -12,6 +12,8 @@ const App = () => {
   const [randomvideoId, setRandomVideoId] = useState("dyFVwXROzZk&t=7463s")
   const [videoFeed, setFeedVideo] = useState("");
   const [videoList, setVideoList] = useState([]);
+  const { clickedVideoId }= useParams();
+
   
   const randomTopicList = ["programing", "marine biology", "sea life", "React", "Html", "CSS"];
   
@@ -21,9 +23,15 @@ const App = () => {
     fetchFromApi(`search?part=snippet&q=${randomTopicList[randomTopicIdx]}`)
     .then((data)=> {
       let randomVideo = data.items[Math.floor(Math.random() * 50)]
-      setRandomVideoId(randomVideo.id.videoId)
-      setFeedVideo(randomVideo.snippet.title)
-      setVideoList(data.items)
+      
+      if (randomVideo.id.videoId == undefined) {
+        setRandomVideoId("dyFVwXROzZk&t=7463s")
+      } else {
+        setRandomVideoId(randomVideo.id.videoId)
+        setFeedVideo(randomVideo.snippet.title)
+        setVideoList(data.items)
+      }
+      
      })
   
   
@@ -34,9 +42,13 @@ const App = () => {
         fetchFromApi(`search?part=snippet&q=${searchTerm}`)
     .then((data)=> {
       let randomVideo = data.items[Math.floor(Math.random() * 50)]
-      setRandomVideoId(randomVideo.id.videoId)
-      setFeedVideo(randomVideo.snippet.title)
-      setVideoList(data.items)
+      if (randomVideo.id.videoId == undefined) {
+        setRandomVideoId("dyFVwXROzZk&t=7463s")
+      } else {
+        setRandomVideoId(randomVideo.id.videoId)
+        setFeedVideo(randomVideo.snippet.title)
+        setVideoList(data.items)
+      }
      })   
 
   }
@@ -70,9 +82,10 @@ const App = () => {
         </IconButton>
 
       </Paper>
+   
       <Routes>
         <Route path="/" exact element={<Feed randomvideoId={randomvideoId} videoFeed={videoFeed} videoList={videoList} />} />
-        <Route path="/video/:id" element={<VideoDetail />} />
+        <Route path="/video/:id" element={<VideoDetail videoList={videoList}/>} />
         <Route path="/channel/:id" element={<ChannelDetail />} />
       </Routes>
       </Box>

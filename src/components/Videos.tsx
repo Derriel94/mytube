@@ -5,7 +5,7 @@ import {VideoCard} from "./componentindex"
 const Videos = ( {videoList} ) => {
 	
 	return (
-		<Box direction="row"
+		<Stack direction="row"
 			flexWrap="wrap"
 			justifyContent="center"
 			alignItems="center"
@@ -17,7 +17,7 @@ const Videos = ( {videoList} ) => {
 					<VideoCard videoId={video.id} videoSnippet={video.snippet}/>
 				</Box>)
 		})}
-		</Box>
+		</Stack>
 	)
 }
 
